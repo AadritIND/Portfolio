@@ -13,6 +13,8 @@ import {
   Send,
   Zap,
 } from "lucide-react";
+import { useUiStore } from "../store/ui";
+import { skinById, withAlpha } from "../lib/skins";
 
 type CursorMode =
   | "default"
@@ -35,6 +37,8 @@ type CursorMode =
  * Disabled on coarse pointers.
  */
 export default function CustomCursor() {
+  const { skin } = useUiStore();
+  const accentHex = skinById(skin).hex;
   const [mode, setMode] = useState<CursorMode>("default");
   const [isPressed, setIsPressed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -91,16 +95,16 @@ export default function CustomCursor() {
         setIsPressed(true);
         const hint = (hinted.getAttribute("data-cursor") || "").toUpperCase();
         if (hint === "COPY") { setMode("copy"); setHighlight(hinted, "#10B981"); }
-        else if (hint === "CODE") { setMode("code"); setHighlight(hinted, "#0052FF"); }
-        else if (hint === "LINK" || hint === "EXT") { setMode("link"); setHighlight(hinted, "#0052FF"); }
-        else if (hint === "NAV" || hint === "GO" || hint === "TOP") { setMode("nav"); setHighlight(hinted, "#0052FF"); }
+        else if (hint === "CODE") { setMode("code"); setHighlight(hinted, accentHex); }
+        else if (hint === "LINK" || hint === "EXT") { setMode("link"); setHighlight(hinted, accentHex); }
+        else if (hint === "NAV" || hint === "GO" || hint === "TOP") { setMode("nav"); setHighlight(hinted, accentHex); }
         else if (hint === "AUDIO" || hint === "SOUND") { setMode("audio"); setHighlight(hinted, "#6366F1"); }
         else if (hint === "RUN" || hint === "TERMINAL") { setMode("terminal"); setHighlight(hinted, "#10B981"); }
-        else if (hint === "VIEW") { setMode("view"); setHighlight(hinted, "#0052FF"); }
+        else if (hint === "VIEW") { setMode("view"); setHighlight(hinted, accentHex); }
         else if (hint === "EXPLORE") { setMode("explore"); setHighlight(hinted, "#F59E0B"); }
         else if (hint === "CLOSE") { setMode("close"); setHighlight(hinted, "#EF4444"); }
-        else if (hint === "SEND") { setMode("send"); setHighlight(hinted, "#0052FF"); }
-        else { setMode("action"); setHighlight(hinted, "#0052FF"); }
+        else if (hint === "SEND") { setMode("send"); setHighlight(hinted, accentHex); }
+        else { setMode("action"); setHighlight(hinted, accentHex); }
         return;
       }
 
@@ -115,13 +119,13 @@ export default function CustomCursor() {
         const href = interactive.getAttribute("href") || "";
 
         if (interactive.tagName === "INPUT" || interactive.tagName === "TEXTAREA") {
-          setMode("input"); setHighlight(interactive, "#0052FF");
+          setMode("input"); setHighlight(interactive, accentHex);
         } else if (text.includes("COPY") || aria.includes("COPY") || text.includes("GMAIL")) {
           setMode("copy"); setHighlight(interactive, "#10B981");
         } else if (text.includes("SEND") || text.includes("SUBMIT") || aria.includes("SEND")) {
-          setMode("send"); setHighlight(interactive, "#0052FF");
+          setMode("send"); setHighlight(interactive, accentHex);
         } else if (text.includes("INSPECT") || text.includes("CODE") || aria.includes("CODE")) {
-          setMode("code"); setHighlight(interactive, "#0052FF");
+          setMode("code"); setHighlight(interactive, accentHex);
         } else if (title.includes("MUTE") || title.includes("SOUND") || text.includes("FX:")) {
           setMode("audio"); setHighlight(interactive, "#6366F1");
         } else if (
@@ -130,21 +134,21 @@ export default function CustomCursor() {
           text.includes("WORKS") || text.includes("ABOUT") || text.includes("CONNECT") ||
           text.includes("GITHUB") || href.startsWith("#") || href === "/"
         ) {
-          setMode("nav"); setHighlight(interactive, "#0052FF");
+          setMode("nav"); setHighlight(interactive, accentHex);
         } else if (
           interactive.getAttribute("target") === "_blank" ||
           href.includes("github.com") || title.includes("GITHUB") ||
           text.includes("LIVE DEMO") || aria.includes("LIVE DEMO")
         ) {
-          setMode("link"); setHighlight(interactive, "#0052FF");
+          setMode("link"); setHighlight(interactive, accentHex);
         } else if (title.includes("CLEAR") || aria.includes("CLOSE") || text === "✕" || text === "×") {
           setMode("close"); setHighlight(interactive, "#EF4444");
         } else if (text.includes("BENTO") || text.includes("TERMINAL") || interactive.closest('[role="tablist"]')) {
-          setMode("view"); setHighlight(interactive, "#0052FF");
+          setMode("view"); setHighlight(interactive, accentHex);
         } else if (text.includes("PEEK") || text.includes("STASH") || text.includes("EXPLORE")) {
           setMode("explore"); setHighlight(interactive, "#F59E0B");
         } else {
-          setMode("action"); setHighlight(interactive, "#0052FF");
+          setMode("action"); setHighlight(interactive, accentHex);
         }
       } else {
         setIsPressed(false);
@@ -171,7 +175,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", onMouseLeave);
       clearHighlight();
     };
-  }, [isVisible, x, y]);
+  }, [isVisible, x, y, accentHex]);
 
   if (!isVisible) return null;
 
@@ -198,15 +202,15 @@ export default function CustomCursor() {
       case "copy": return "rgba(16, 185, 129, 0.9)";
       case "audio": return "rgba(99, 102, 241, 0.9)";
       case "close": return "rgba(239, 68, 68, 0.9)";
-      case "input": return "rgba(0, 82, 255, 0.85)";
-      case "code": return "rgba(0, 82, 255, 0.9)";
-      case "nav": return "rgba(0, 82, 255, 0.9)";
+      case "input": return withAlpha(accentHex, 0.85);
+      case "code": return withAlpha(accentHex, 0.9);
+      case "nav": return withAlpha(accentHex, 0.9);
       case "terminal": return "rgba(13, 14, 18, 0.95)";
-      case "link": return "rgba(0, 82, 255, 0.9)";
-      case "view": return "rgba(0, 82, 255, 0.9)";
+      case "link": return withAlpha(accentHex, 0.9);
+      case "view": return withAlpha(accentHex, 0.9);
       case "explore": return "rgba(245, 158, 11, 0.9)";
-      case "send": return "rgba(0, 82, 255, 0.9)";
-      case "action": return "rgba(0, 82, 255, 0.9)";
+      case "send": return withAlpha(accentHex, 0.9);
+      case "action": return withAlpha(accentHex, 0.9);
       default: return "transparent";
     }
   };
@@ -238,12 +242,12 @@ export default function CustomCursor() {
           y: dotY,
           translateX: -3,
           translateY: -3,
-          boxShadow: "0 0 6px rgba(0, 82, 255, 0.6)",
+          boxShadow: withAlpha(accentHex, 0.6),
         }}
         animate={{
           scale: isDown ? 1.8 : isPressed ? 0.5 : 1,
           opacity: isDown ? 0.6 : 1,
-          backgroundColor: isDown ? tagColor() : "#0052FF",
+          backgroundColor: isDown ? tagColor() : accentHex,
         }}
         transition={{ type: "spring", damping: 30, stiffness: 500 }}
         className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none"

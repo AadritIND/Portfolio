@@ -62,8 +62,8 @@ export default function WorksGrid({ onInspectCode }: { onInspectCode: (p: Projec
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
         <div>
-          <span className="font-mono-code text-xs uppercase tracking-widest text-[#0052FF] mb-2 block">
-            FULL CATALOG // GITHUB.COM/AADRIT1234
+          <span className="font-mono-code text-xs uppercase tracking-widest text-accent mb-2 block">
+            FULL CATALOG // GITHUB.COM/AADRITIND
           </span>
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
             EXPLORE BY DOMAIN.
@@ -77,7 +77,7 @@ export default function WorksGrid({ onInspectCode }: { onInspectCode: (p: Projec
               placeholder="Search projects..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#0052FF] font-mono-code transition"
+              className="w-full bg-white/5 border border-white/10 rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-accent font-mono-code transition"
             />
           </div>
           <a
@@ -103,7 +103,7 @@ export default function WorksGrid({ onInspectCode }: { onInspectCode: (p: Projec
             }}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono-code text-xs font-semibold transition cursor-pointer ${
               filter === f.id
-                ? "bg-[#0052FF] text-white shadow-lg shadow-blue-500/20"
+                ? "bg-accent text-white shadow-lg shadow-accent/20"
                 : "bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10"
             }`}
           >

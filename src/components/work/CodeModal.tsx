@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Copy, Check, X, ExternalLink } from "lucide-react";
 import type { Project } from "../../data/types";
+import { getAccentHex } from "../../lib/skins";
 
 /**
  * Code inspector modal — dark console panel showing the project's snippet
@@ -39,7 +40,7 @@ export default function CodeModal({
           {/* Title bar */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
             <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#0052FF] animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
               <div>
                 <h3 className="font-display font-bold text-base text-white tracking-wide">
                   {project.name}
@@ -58,7 +59,7 @@ export default function CodeModal({
                     particleCount: 30,
                     spread: 50,
                     origin: { y: 0.6 },
-                    colors: ["#0052FF", "#FFFFFF"],
+                    colors: [getAccentHex(), "#FFFFFF"],
                   });
                   setTimeout(() => setCopied(false), 2000);
                 }}
@@ -88,7 +89,7 @@ export default function CodeModal({
           {/* Specs + code */}
           <div className="p-6">
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="font-mono-code text-xs text-[#0052FF] font-semibold">
+              <span className="font-mono-code text-xs text-accent font-semibold">
                 SPECS:
               </span>
               {project.benchmark && (
@@ -117,7 +118,7 @@ export default function CodeModal({
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="text-[#0052FF] hover:underline flex items-center gap-1"
+              className="text-accent hover:underline flex items-center gap-1"
             >
               <span>VIEW IN REPOSITORY</span>
               <ExternalLink className="w-3 h-3" />

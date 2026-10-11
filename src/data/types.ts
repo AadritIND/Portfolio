@@ -39,8 +39,8 @@ export interface StackCategory {
 export const IDENTITY = {
   handle: "AADRIT",
   role: "DEV",
-  githubHandle: "AADRIT1234",
-  githubUrl: "https://github.com/Aadrit1234",
+  githubHandle: "AADRITIND",
+  githubUrl: "https://github.com/AadritIND",
   avatarUrl: "https://avatars.githubusercontent.com/u/218725417?v=4",
   email: "aadritchandravanci23@gmail.com",
 } as const;

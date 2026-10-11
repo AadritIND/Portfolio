@@ -2,7 +2,7 @@ import type { Project } from "./types";
 
 /**
  * Project catalog — every entry maps to a real repository at
- * github.com/Aadrit1234. Structure mirrors the original portfolio's catalog
+ * github.com/AadritIND. Structure mirrors the original portfolio's catalog
  * (category, categoryLabel, tagline, description, language, tags,
  * githubUrl, liveUrl, benchmark, status, codeSnippet) with the same
  * command-shell fidelity on the /work terminal.
@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
       "Encrypted collaboration rooms with real-time chat, WebRTC peer-to-peer file transfer, and presence — built on Vite, Fastify and PostgreSQL with end-to-end encryption by default.",
     language: "TypeScript",
     tags: ["E2EE", "WebRTC", "Fastify", "PostgreSQL", "Vite"],
-    githubUrl: "https://github.com/Aadrit1234/conduit",
+    githubUrl: "https://github.com/AadritIND/conduit",
     liveUrl: "https://conduit-liard.vercel.app",
     benchmark: "E2E-ENCRYPTED RELAY",
     status: "active",
@@ -54,7 +54,7 @@ export class ConduitRoom {
       "Documents, images and audio converted with full content preservation — LibreOffice headless, pdf2docx and Sharp pipelines behind a simple upload-and-download interface.",
     language: "CSS / JS",
     tags: ["LibreOffice", "pdf2docx", "Sharp", "Transcription", "Vercel"],
-    githubUrl: "https://github.com/Aadrit1234/filemorph",
+    githubUrl: "https://github.com/AadritIND/filemorph",
     liveUrl: "https://filemorph-dusky.vercel.app",
     benchmark: "LOSSLESS CONVERSION",
     status: "active",
@@ -87,7 +87,7 @@ export async function convert(file, target) {
       "833 formula cards with typo-tolerant search and an AI tutor running on your own API key. Everything works offline-first: your vault, your device, zero accounts.",
     language: "HTML / JS",
     tags: ["Offline-First", "PWA", "Typo-Tolerant Search", "AI Tutor", "IndexedDB"],
-    githubUrl: "https://github.com/Aadrit1234/FormulaVault",
+    githubUrl: "https://github.com/AadritIND/FormulaVault",
     liveUrl: "https://formulav.vercel.app",
     benchmark: "833 FORMULA CARDS",
     status: "active",
@@ -118,7 +118,7 @@ export function searchFormulas(query, vault) {
       "Self-hosted print server for Wi-Fi and USB printers: upload from any device, preview the exact output, and print unattended — no cloud, no drivers, no surprises.",
     language: "JavaScript",
     tags: ["Self-Hosted", "CUPS", "Wi-Fi Printing", "Preview", "Node.js"],
-    githubUrl: "https://github.com/Aadrit1234/printbridge",
+    githubUrl: "https://github.com/AadritIND/printbridge",
     benchmark: "UNATTENDED PRINTING",
     status: "active",
     codeSnippet: {
@@ -149,7 +149,7 @@ export class PrintQueue {
       "A prompt compiler for AI workflows: five pluggable AI backends with per-request model selection, so you always route the task to the model that handles it best.",
     language: "JavaScript",
     tags: ["AI", "Prompt Engineering", "Multi-Backend", "Model Routing"],
-    githubUrl: "https://github.com/Aadrit1234/prompt-forge",
+    githubUrl: "https://github.com/AadritIND/prompt-forge",
     liveUrl: "https://prompt-forge-beige-ten.vercel.app",
     benchmark: "5 AI BACKENDS",
     status: "active",
@@ -181,7 +181,7 @@ export async function forge(task, { backend, model }) {
       "A scratchpad for experiments and prototypes. Early-stage ideas get stress-tested here before they graduate into full repositories.",
     language: "HTML",
     tags: ["Experiment", "Prototype", "WIP"],
-    githubUrl: "https://github.com/Aadrit1234/blu-blu",
+    githubUrl: "https://github.com/AadritIND/blu-blu",
     status: "building",
     codeSnippet: {
       lang: "javascript",
@@ -194,8 +194,8 @@ export const EXPERIMENTS = {
     },
   },
   {
-    id: "aadrit1234",
-    name: "aadrit1234",
+    id: "aadritind",
+    name: "aadritind",
     category: "EXPERIMENTS",
     categoryLabel: "Profile & Config Hub",
     tagline: "GitHub profile, configs and everything that glues the workflow together",
@@ -203,7 +203,7 @@ export const EXPERIMENTS = {
       "The profile repository — README, workspace configs, and the setup notes that keep the rest of the stack coherent.",
     language: "Markdown",
     tags: ["GitHub", "Config", "Workflow"],
-    githubUrl: "https://github.com/Aadrit1234/Aadrit1234",
+    githubUrl: "https://github.com/AadritIND/AadritIND",
     status: "active",
     codeSnippet: {
       lang: "markdown",

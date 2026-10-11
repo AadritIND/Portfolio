@@ -45,14 +45,14 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22 }}
-      className="bg-[#14151C] border border-white/10 rounded-3xl flex flex-col justify-between hover:border-[#0052FF]/60 transition-colors duration-300 group overflow-hidden relative shadow-xl min-h-[380px]"
+      className="bg-[#14151C] border border-white/10 rounded-3xl flex flex-col justify-between hover:border-accent/60 transition-colors duration-300 group overflow-hidden relative shadow-xl min-h-[380px]"
     >
       {/* Hover glow */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(0, 82, 255, 0.12) 0%, transparent 70%)",
+            "radial-gradient(circle at center, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 70%)",
         }}
       />
 
@@ -72,7 +72,7 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
                 }
               />
             )}
-            <span className="font-mono-code text-[11px] text-[#0052FF] font-bold uppercase tracking-wider">
+            <span className="font-mono-code text-[11px] text-accent font-bold uppercase tracking-wider">
               {project.categoryLabel}
             </span>
           </div>
@@ -93,7 +93,7 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
             href={project.githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-[#4d85ff] transition-colors duration-300 block"
+            className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-accent transition-colors duration-300 block"
           >
             {project.name}
           </a>
@@ -124,7 +124,7 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
               soundFX.playClick();
               onInspectCode(project);
             }}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0052FF] text-white text-xs font-mono-code font-bold hover:bg-blue-600 active:scale-95 transition cursor-pointer"
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-mono-code font-bold hover:bg-accent/85 active:scale-95 transition cursor-pointer"
           >
             <CodeXml className="w-3.5 h-3.5" />
             <span>INSPECT CODE</span>
@@ -134,7 +134,7 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
             href={project.githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0052FF] text-white text-xs font-mono-code font-bold hover:bg-blue-600 transition cursor-pointer"
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-mono-code font-bold hover:bg-accent/85 transition cursor-pointer"
           >
             <CodeXml className="w-3.5 h-3.5" />
             <span>INSPECT CODE</span>

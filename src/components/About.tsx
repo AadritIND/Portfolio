@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import SheetTag from "./SheetTag";
 import {
   ArrowUpRight,
   ShieldCheck,
@@ -27,40 +28,40 @@ export default function About() {
     {
       title: "TECHNICAL",
       desc: "This is the thing which drives me. Digging deep down to see how things work and recreating them myself for my custom use is the best experience.",
-      icon: <Wrench className="w-5 h-5 text-[#0052FF]" />,
+      icon: <Wrench className="w-5 h-5 text-accent" />,
     },
     {
       title: "CYBERSECURITY",
       desc: "Ethical hacking enthusiast. Understanding how systems break is how you learn to build them properly — recon, web exploitation, and hardening.",
-      icon: <Database className="w-5 h-5 text-[#0052FF]" />,
+      icon: <Database className="w-5 h-5 text-accent" />,
     },
     {
       title: "AI & AUTOMATION",
       desc: "My lifeline, the thing I depend on most. AI and automation are my fav part. Solving hard and complex problems together to deliver crazy outcomes.",
-      icon: <BrainCircuit className="w-5 h-5 text-[#0052FF]" />,
+      icon: <BrainCircuit className="w-5 h-5 text-accent" />,
     },
     {
       title: "FRONTEND",
       desc: "AHMMM, TBH this is a bottleneck, but dw will figure out something for this too.",
-      icon: <LayoutDashboard className="w-5 h-5 text-[#0052FF]" />,
+      icon: <LayoutDashboard className="w-5 h-5 text-accent" />,
     },
   ];
 
   const setupCards = [
     {
-      icon: <LaptopMinimal className="w-5 h-5 text-[#0052FF]" />,
+      icon: <LaptopMinimal className="w-5 h-5 text-accent" />,
       label: "WORKSTATION",
       title: "LINUX / WINDOWS",
       desc: "Daily-driving Linux for dev & security labs, Windows for the rest. Dual boot, because toolbox > ideology.",
     },
     {
-      icon: <Bot className="w-5 h-5 text-[#0052FF]" />,
+      icon: <Bot className="w-5 h-5 text-accent" />,
       label: "AI CODING STACK",
       title: "AI Agents",
       desc: "Full library of AI agents working in parallel — Freebuff, Claude, OpenCode — each on different things.",
     },
     {
-      icon: <Coffee className="w-5 h-5 text-[#0052FF]" />,
+      icon: <Coffee className="w-5 h-5 text-accent" />,
       label: "POWER SOURCE",
       title: "CAFFEINE",
       desc: "OFC this is the thing keeping me pushing. Coffee & chai — the only two dependencies that never break.",
@@ -73,10 +74,16 @@ export default function About() {
       className="py-24 px-4 sm:px-8 bg-white border-t border-zinc-200 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
+        <SheetTag
+          sheet="03"
+          label="MANIFEST / ABOUT"
+          meta={["SCALE 1:1", "REV 3.2.0"]}
+          className="mb-10"
+        />
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-zinc-200">
           <div>
-            <span className="font-tech text-[9px] uppercase tracking-[0.2em] text-[#0052FF] mb-3 block">
+            <span className="font-tech text-[9px] uppercase tracking-[0.2em] text-accent mb-3 block">
               ABOUT // AADRIT
             </span>
             <h2 className="font-display font-normal text-4xl sm:text-6xl text-[#0D0E12] tracking-[0.04em] leading-[1.1]">
@@ -90,7 +97,7 @@ export default function About() {
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0D0E12] text-white hover:bg-zinc-800 transition font-tech text-[9px] self-end"
           >
             <ArrowUpRight className="w-3.5 h-3.5" />
-            <span>GITHUB.COM/AADRIT1234</span>
+            <span>GITHUB.COM/AADRITIND</span>
           </a>
         </div>
 
@@ -131,7 +138,7 @@ export default function About() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-7 bg-[#0D0E12] text-white p-8 md:p-10 rounded-3xl border border-zinc-800 shadow-xl flex flex-col gap-6">
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#0052FF]/10 border-l-2 border-[#0052FF] text-[#0052FF] font-bold uppercase tracking-wider text-xs font-mono-code">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-accent/10 border-l-2 border-accent text-accent font-bold uppercase tracking-wider text-xs font-mono-code">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     AVAILABLE FOR COLLABORATION
                   </div>
@@ -161,7 +168,7 @@ export default function About() {
                       targets in a lab, training ML models on my own datasets,
                       or automating away the boring parts of development.
                     </p>
-                    <blockquote className="border-l-2 border-[#0052FF] pl-4 italic text-zinc-400 mt-6 py-1">
+                    <blockquote className="border-l-2 border-accent pl-4 italic text-zinc-400 mt-6 py-1">
                       &quot;At some point you touched a computer and the
                       computer did what you wanted, you made it do what you
                       wanted it to do and you realized that you were a God...
@@ -267,7 +274,7 @@ export default function About() {
                   <div key={i}>
                     <div className="flex items-center gap-2 mb-3">
                       <div className="p-2 rounded-xl bg-white/5">{card.icon}</div>
-                      <span className="font-mono-code text-xs text-[#0052FF] font-semibold">
+                      <span className="font-mono-code text-xs text-accent font-semibold">
                         {card.label}
                       </span>
                     </div>
@@ -281,7 +288,7 @@ export default function About() {
                 ))}
               </div>
               <div className="mt-10 pt-8 border-t border-white/10 flex items-center gap-3 font-mono-code text-xs text-zinc-400">
-                <Zap className="w-4 h-4 text-[#0052FF]" />
+                <Zap className="w-4 h-4 text-accent" />
                 <span>
                   POWERED BY CAFFEINE AND A CONVICTION THAT MACHINES SHOULD DO
                   WHAT YOU TELL THEM.

@@ -1,133 +1,171 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Terminal } from "lucide-react";
-
-const BOOT_MESSAGES = [
-  "WAKING UP THE KERNEL NO CAP...",
-  "COOKING UP HEAT SHADERS...",
-  "REWRITING IT IN RUST FR FR...",
-  "LOCKING IN THE ARCHITECTURE...",
-  "VIBE CHECKING THE DOM...",
-  "WE SO BACK // READY TO COOK",
-];
+import { useEffect, useState, type CSSProperties } from "react";
+import { ArrowRight } from "lucide-react";
+import { IDENTITY } from "../data/types";
 
 /**
- * Boot-sequence preloader — random shuffled boot messages, live counter,
- * progress bar, then a 5-panel shutter wipe reveal. Shown once per session.
+ * BOOT / POST — the site opens on a POST diagnostic sheet: a left-aligned
+ * self-test log where each subsystem reports in, a datum-rule progress scale,
+ * then a single slit reveal. Deliberately not a centred percentage counter.
+ * Shown once per session; skippable.
  */
+
+const POST: Array<[string, string]> = [
+  ["mount /dev/mainframe", "OK"],
+  ["verify operator → " + IDENTITY.githubHandle, "OK"],
+  ["resolve accent register", "OK"],
+  ["warm canvas / webgl layer", "OK"],
+  ["handshake github public api", "LINKED"],
+  ["load 7 repositories", "OK"],
+  ["spool sheets 01→06", "OK"],
+  ["arm cursor + sound fx", "OK"],
+  ["queue the fun stuff", "OK"],
+];
+
+const LINE_MS = 125;
+const HOLD_MS = 320;
+const EXIT_MS = 520;
+
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-  const [isWiping, setIsWiping] = useState(false);
-
-  const { initialStep, dynamicSteps } = (() => {
-    const shuffled = [...BOOT_MESSAGES].sort(() => 0.5 - Math.random());
-    return {
-      initialStep: shuffled[0],
-      dynamicSteps: [
-        { at: 40, label: shuffled[1] },
-        { at: 85, label: "SYSTEM READY // ENGAGING UI" },
-      ],
-    };
-  })();
-
-  const [currentStep, setCurrentStep] = useState(initialStep);
+  const [shown, setShown] = useState(0);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setIsWiping(true);
-            setTimeout(onComplete, 1100);
-          }, 400);
-          return 100;
-        }
-        const next = Math.min(100, prev + Math.floor(Math.random() * 8) + 3);
-        const step = dynamicSteps.find((s) => next >= s.at);
-        if (step) setCurrentStep(step.label);
-        return next;
-      });
-    }, 45);
-    return () => clearInterval(interval);
-  }, [onComplete, dynamicSteps]);
+    if (shown >= POST.length) {
+      const hold = setTimeout(() => setExiting(true), HOLD_MS);
+      return () => clearTimeout(hold);
+    }
+    const id = setTimeout(() => setShown((n) => n + 1), LINE_MS);
+    return () => clearTimeout(id);
+  }, [shown]);
+
+  useEffect(() => {
+    if (!exiting) return;
+    const id = setTimeout(onComplete, EXIT_MS);
+    return () => clearTimeout(id);
+  }, [exiting, onComplete]);
+
+  const skip = () => {
+    setShown(POST.length);
+  };
+
+  const pct = Math.round((shown / POST.length) * 100);
 
   return (
-    <AnimatePresence>
-      {isWiping ? (
-        <div className="fixed inset-0 z-50 pointer-events-none flex">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ scaleY: 1 }}
-              animate={{ scaleY: 0 }}
-              transition={{
-                duration: 0.9,
-                delay: i * 0.08,
-                ease: [0.76, 0, 0.24, 1],
-              }}
-              style={{ originY: i % 2 === 0 ? 0 : 1 }}
-              className="flex-1 h-full bg-[#0A0B0E] border-r border-white/5 relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0052FF]/10 to-transparent pointer-events-none" />
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <motion.div
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-50 flex flex-col justify-between p-6 md:p-12 bg-[#0A0B0E] text-white selection:bg-[#0052FF]"
-        >
-          {/* Top bar */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-3 w-3 rounded-full bg-[#0052FF] animate-pulse" />
-              <span className="font-mono-code text-xs uppercase tracking-widest text-zinc-400">
-                SYS.INIT // LOCKING IN
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="font-mono-code text-xs text-zinc-500 hidden sm:inline">
-                GPU: WebGL2_ACCELERATED
-              </span>
-              <button
-                onClick={() => {
-                  setProgress(100);
-                  setIsWiping(true);
-                  setTimeout(onComplete, 1100);
-                }}
-                className="font-mono-code text-xs text-zinc-400 hover:text-white border border-white/15 px-3 py-1 rounded hover:bg-white/5 transition flex items-center gap-1 cursor-pointer"
-              >
-                SKIP THIS FR <ArrowRight className="w-3 h-3" />
-              </button>
-            </div>
-          </div>
+    <div
+      className="fixed inset-0 z-[100] overflow-hidden fascia text-zinc-300"
+      style={{
+        opacity: exiting ? 0 : 1,
+        transition: `opacity ${EXIT_MS}ms cubic-bezier(0.16,1,0.3,1)`,
+        pointerEvents: exiting ? "none" : "auto",
+      }}
+    >
+      {/* faint drawing grid */}
+      <div
+        className="absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage:
+            "linear-gradient(90deg, #fff 1px, transparent 1px), linear-gradient(#fff 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
 
-          {/* Center counter */}
-          <div className="max-w-3xl w-full mx-auto my-auto py-12 flex flex-col items-center">
-            <div className="flex items-baseline justify-center gap-4 mb-4">
-              <span className="font-display font-black text-6xl md:text-9xl tracking-tighter text-white">
-                {progress.toString().padStart(3, "0")}
-              </span>
-              <span className="font-mono-code text-2xl md:text-3xl text-[#0052FF] font-bold">
-                %
-              </span>
-            </div>
-            <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden mb-6 relative">
-              <motion.div
-                className="h-full bg-gradient-to-r from-[#0052FF] via-[#3B82F6] to-[#60A5FA]"
-                style={{ width: `${progress}%` }}
-                transition={{ ease: "easeOut", duration: 0.1 }}
-              />
-            </div>
-            <div className="flex items-center justify-center gap-2 font-mono-code text-xs md:text-sm text-zinc-300 text-center">
-              <Terminal className="w-4 h-4 text-[#0052FF] shrink-0" />
-              <span className="truncate">{currentStep}</span>
-            </div>
+      {/* sheet frame + registration crosses */}
+      <div className="absolute inset-4 sm:inset-6 border border-white/10" />
+      <span
+        className="absolute top-[6px] left-[6px] h-3 w-3 sm:top-[10px] sm:left-[10px]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)), linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35))",
+          backgroundSize: "1px 100%, 100% 1px",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <span
+        className="absolute bottom-[6px] right-[6px] h-3 w-3 sm:bottom-[10px] sm:right-[10px]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)), linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35))",
+          backgroundSize: "1px 100%, 100% 1px",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      <div className="relative flex h-full flex-col justify-between p-8 sm:p-12">
+        {/* header strip */}
+        <div className="flex items-center justify-between gap-4">
+          <span className="font-tech text-[10px] tracking-[0.2em] text-zinc-400">
+            POST / BOOT
+          </span>
+          <span className="hidden font-mono-code text-[10px] text-zinc-600 sm:inline">
+            REV 3.2.0 · SHEET 00 · COLD START
+          </span>
+          <button
+            onClick={skip}
+            className="flex items-center gap-1.5 border border-white/15 px-2.5 py-1 font-mono-code text-[10px] text-zinc-400 transition hover:border-accent hover:text-zinc-100 cursor-pointer"
+          >
+            SKIP POST <ArrowRight className="h-3 w-3" />
+          </button>
+        </div>
+
+        {/* POST log */}
+        <div className="max-w-2xl">
+          <ul className="space-y-1.5">
+            {POST.map(([label, status], i) => {
+              const live = i < shown;
+              // the last line resolves once everything has reported in
+              const resolved = i < shown - 1 || shown >= POST.length;
+              return (
+                <li
+                  key={label}
+                  className="flex items-baseline gap-3 font-mono-code text-[11px] sm:text-xs"
+                  style={{
+                    opacity: live ? 1 : 0.18,
+                    transform: live ? "none" : "translateX(-6px)",
+                    transition: "opacity 220ms ease-out, transform 220ms ease-out",
+                  }}
+                >
+                  <span className="text-zinc-600">▸</span>
+                  <span className="text-zinc-300">{label}</span>
+                  <span className="flex-1 min-w-4 border-b border-dotted border-white/10" />
+                  <span
+                    className={`shrink-0 ${resolved ? "text-accent" : "text-zinc-600"}`}
+                  >
+                    {resolved ? status : "····"}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* progress scale */}
+        <div>
+          <div
+            className="flex items-center gap-4"
+            style={{ "--datum-ink": "rgba(255,255,255,0.24)" } as CSSProperties}
+          >
+            <span className="font-tech text-[10px] tracking-[0.18em] text-zinc-400">
+              {exiting ? "ENGAGING UI" : "SELF TEST"}
+            </span>
+            <div className="flex-1 datum-rule self-end" />
+            <span className="font-mono-code text-xs text-zinc-300 tnum">
+              {String(pct).padStart(3, "0")}%
+            </span>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </div>
+
+      {/* slit reveal — one accent sweep, not five panels */}
+      <div
+        className="pointer-events-none absolute left-0 right-0 top-1/2 h-px"
+        style={{
+          backgroundColor: "var(--accent)",
+          transform: exiting ? "scaleX(1)" : "scaleX(0)",
+          transition: `transform ${EXIT_MS}ms cubic-bezier(0.16,1,0.3,1)`,
+        }}
+      />
+    </div>
   );
 }

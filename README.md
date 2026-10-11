@@ -1,63 +1,125 @@
-# AADRIT — Portfolio
+# Portfolio - AADRIT's Personal Portfolio Website
 
-Personal portfolio for **Aadrit** ([github.com/Aadrit1234](https://github.com/Aadrit1234)) — Full-Stack Developer, Cybersecurity & Ethical Hacking enthusiast, AI/ML explorer.
+![Portfolio Banner](https://img.shields.io/badge/Portfolio-3.2.0-blue?style=flat-square)
+![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-7.1.2-646CFF?style=flat-square&logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.3.3-38B2AC?style=flat-square&logo=tailwind-css)
 
-A dark/light, sci-fi-styled SPA with a boot-sequence preloader, expanding side rail, parallax hero, skill marquee, tabbed about section, project catalog with 3D-tilt cards, an interactive hacker terminal, and a contact terminal that routes straight to the inbox.
+A futuristic, cyberpunk-themed portfolio website showcasing projects, skills, and real-time GitHub activity. Built with cutting-edge web technologies, featuring an interactive terminal with AI capabilities powered by multiple LLM providers.
 
-## Stack
+## Live Demo
 
-| Layer | Tech |
-| --- | --- |
-| Framework | React 19 + TypeScript |
-| Build | Vite 7 |
-| Styling | Tailwind CSS v4 (`@tailwindcss/vite`) |
-| Animation | framer-motion |
-| Routing | react-router-dom |
-| Icons | lucide-react |
-| Extras | canvas-confetti, zustand |
-| Fonts | Azonix · Conthrax · Nasalization · Audiowide · Orbitron · Blanka (cdnfonts) + JetBrains Mono |
+[https://aadritind.vercel.app](https://aadritind.vercel.app)
 
-## Routes
+## Features
 
-- `/` — home: preloader → hero → skill marquee → about (3 tabs) → contact
-- `/work` — systems catalog: bento grid (3D tilt cards) + hacker terminal CLI (keys `1` / `2`), code inspector modal
+### 🎨 Design & UI
+- **Futuristic Cyberpunk Aesthetic** - Custom retro-tech design with animated elements
+- **Custom Cursor** - Interactive cursor effects with context-aware behavior
+- **Smooth Animations** - Framer Motion powered animations throughout
+- **Dark/Light Mode Elements** - Dynamic theming based on sections
+- **Responsive Design** - Optimized for all devices
 
-## Terminal commands (`/work`)
+### 💻 Interactive Terminal
+- **AI-Powered Terminal** - Integrated AI assistant with multiple providers
+- **Multiple AI Providers** - Support for Groq, OpenRouter, and Google AI Studio
+- **Repository Browser** - Browse GitHub repos directly from terminal (`ls`, `cat`, `grep`, `init` commands)
+- **Real-time Interaction** - Command execution with animated feedback
 
-```
-ls                list all repositories
-cat <repo>        open the GitHub repository in a new tab
-init <repo>       open the README / release page
-grep <repo>       print full card metadata for a repo
-clear             clear the buffer
-```
+### 📊 GitHub Integration
+- **Real-time Data** - Live GitHub stats updated from public API
+- **Commit Activity Grid** - Superior contribution visualization over last 60 days
+- **Auto-updating** - Automatically reflects new repos and commits
+- **GitHub Developer Status** - Displays GitHub developer membership
+- **Public API Only** - No authentication required, respects rate limits
 
-## Run locally
+### 🤖 AI Capabilities
+- **Multi-provider Support**: Groq, OpenRouter, Google AI Studio (Gemini)
+- **Context-aware Responses** - Integrated into terminal interface
+- **Model Switching** - Switch between providers/models on-the-fly
+- **Built-in Commands**: `ai <query>`, `aimodel <provider>`, `models`
 
+### ⚡ Performance
+- **Lightning Fast** - Built with Vite for optimal performance
+- **Type-Safe** - Full TypeScript coverage
+- **Optimized Builds** - Code splitting and minification
+- **Modern Stack** - React 19, TailwindCSS v4
+
+## Tech Stack
+
+- **Framework**: React 19.1.1
+- **Build Tool**: Vite 7.1.2
+- **Language**: TypeScript 5.8.3
+- **Styling**: TailwindCSS 4.3.3
+- **Animations**: Framer Motion 12.23.12
+- **State Management**: Zustand 5.0.8
+- **Routing**: React Router DOM 7.9.1
+- **Icons**: Lucide React 0.544.0
+- **Effects**: Canvas Confetti 1.9.3
+
+## Quick Start
+
+1. Clone the repository
 ```bash
-npm install
-npm run dev      # dev server
-npm run build    # typecheck + production build → dist/
-npm run preview  # serve the production build
+git clone https://github.com/AadritIND/Portfolio.git
 ```
 
-## Deploy
+2. Install dependencies
+```bash
+cd Portfolio
+npm install
+```
 
-Any static host works. The repo ships with [`vercel.json`](vercel.json) SPA rewrites, so on Vercel it's zero-config:
+3. Set up environment variables (optional - AI features work with provided keys)
+```bash
+cp .env.example .env
+# Add your API keys if needed
+```
 
-1. Push this repo to GitHub.
-2. On [vercel.com](https://vercel.com) → **Add New Project** → import the repo.
-3. Framework preset: **Vite** (auto-detected). Build `npm run build`, output `dist`.
+4. Run development server
+```bash
+npm run dev
+```
 
-## Personalization
+5. Build for production
+```bash
+npm run build
+```
 
-All identity and content live in a few data files:
+6. Preview production build
+```bash
+npm run preview
+```
 
-| What | Where |
-| --- | --- |
-| Name, handle, GitHub URL, avatar, email | [`src/data/types.ts`](src/data/types.ts) |
-| Projects (cards, tags, snippets, links) | [`src/data/projects.ts`](src/data/projects.ts) |
-| Marquee items + tech-stack taxonomy | [`src/data/stack.ts`](src/data/stack.ts) |
-| Hero / about copy | [`src/components/Hero.tsx`](src/components/Hero.tsx), [`src/components/About.tsx`](src/components/About.tsx) |
+## Environment Variables
 
-Project counts (`PEEK THE STASH (n)`, `n REPOSITORIES`) derive automatically from the project list.
+The project includes pre-configured API keys for AI functionality:
+
+```env
+VITE_GROQ_API_KEY=your_groq_api_key
+VITE_OPENROUTER_API_KEY=your_openrouter_api_key
+VITE_GOOGLE_AI_API_KEY=your_google_ai_api_key
+```
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com) with custom domain: [aadritind.vercel.app](https://aadritind.vercel.app)
+
+## GitHub Stats & Real-time Updates
+
+The portfolio fetches live data from GitHub's public API, ensuring:
+- Repository counts stay in sync
+- Commit activity is always current
+- Stars and stats reflect latest changes
+- Works without authentication
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Connect
+
+- GitHub: [@AadritIND](https://github.com/AadritIND)
+- Email: aadritchandravanci23@gmail.com
+- Portfolio: [aadritind.vercel.app](https://aadritind.vercel.app)

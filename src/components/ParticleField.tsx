@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { getAccentHex, withAlpha } from "../lib/skins";
 
 interface Particle {
   x: number;
@@ -26,6 +27,12 @@ export default function ParticleField() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     const mouse = { x: -1000, y: -1000, active: false };
+
+    // Accent re-tints live when the skin is switched (poll; cheap).
+    let accent = getAccentHex();
+    const accentRefresh = setInterval(() => {
+      accent = getAccentHex();
+    }, 1000);
 
     const onResize = () => {
       if (!canvas) return;
@@ -98,7 +105,7 @@ export default function ParticleField() {
           const influence = (140 - dist) / 140;
           alpha = Math.min(1, p.alpha + influence * 0.8);
           radius = p.baseRadius + influence * 1.5;
-          ctx.strokeStyle = `rgba(0, 82, 255, ${influence * 0.35})`;
+          ctx.strokeStyle = withAlpha(accent, influence * 0.35);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
@@ -106,7 +113,7 @@ export default function ParticleField() {
           ctx.stroke();
         }
 
-        ctx.fillStyle = dist < 140 ? "#0052FF" : `rgba(255, 255, 255, ${alpha * 0.4})`;
+        ctx.fillStyle = dist < 140 ? accent : `rgba(255, 255, 255, ${alpha * 0.4})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         ctx.fill();
@@ -118,7 +125,7 @@ export default function ParticleField() {
           const d = Math.sqrt(ddx * ddx + ddy * ddy);
           if (d < 100) {
             const linkAlpha = (1 - d / 100) * 0.12;
-            ctx.strokeStyle = `rgba(0, 82, 255, ${linkAlpha})`;
+            ctx.strokeStyle = withAlpha(accent, linkAlpha);
             ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
@@ -133,6 +140,7 @@ export default function ParticleField() {
 
     return () => {
       cancelAnimationFrame(raf);
+      clearInterval(accentRefresh);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseleave", onMouseLeave);
