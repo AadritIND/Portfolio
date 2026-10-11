@@ -38,9 +38,7 @@ function useCountUp(target: number, active: boolean) {
   return value;
 }
 
-function repoDisplay(name: string) {
-  return name.length > 14 ? name.slice(0, 11) + "…" : name;
-}
+
 
 function buildGrid(pushes: any[]): number[] {
   const grid = new Array(GRID_DAYS).fill(0);
@@ -186,7 +184,6 @@ export default function GitHubStats() {
   }, []);
 
   const user = data?.user ?? null;
-  const repos = data?.repos ?? null;
   const pushes = data?.pushes ?? [];
   const commits = data?.totalCommits ?? 0;
   const reposCount = useCountUp(user?.public_repos ?? 0, status !== "loading");

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Terminal as TerminalIcon, Trash, ExternalLink, Send, Brain } from "lucide-react";
+import { Terminal as TerminalIcon, Trash, Send, Brain } from "lucide-react";
 import { PROJECTS } from "../../data/projects";
 import { soundFX } from "../../lib/sound";
 import { queryAI, AI_PROVIDERS, type ProviderType } from "../../lib/ai";
@@ -43,10 +43,7 @@ export default function Terminal() {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
-  const findRepo = (query: string) => {
-    const q = query.trim().toLowerCase();
-    return PROJECTS.find((p) => p.id.toLowerCase() === q || p.name.toLowerCase() === q);
-  };
+
 
   const runCommand = async (raw: string) => {
     const cmd = raw.trim();
