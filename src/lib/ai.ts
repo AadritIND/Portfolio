@@ -12,12 +12,12 @@ export const AI_PROVIDERS = {
     baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
     apiKey: import.meta.env.VITE_OPENROUTER_API_KEY,
     defaultModel: 'anthropic/claude-3.5-sonnet',
-    models: ['anthropic/claude-3.5-sonnet', 'google/gemini-flash-1.5', 'openai/gpt-4o-mini', 'meta-llama/llama-3.1-8b-instruct']
+    models: ['anthropic/claude-3.5-sonnet', 'google/gemini-2.5-flash', 'openai/gpt-4o-mini', 'meta-llama/llama-3.1-8b-instruct']
   },
   google: {
     name: 'Google AI Studio',
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta/models',
-    apiKey: import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_GOOGLE_AI_API_KEY,
+    apiKey: import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_GOOGLE_AI_API_KEY || import.meta.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
     defaultModel: 'gemini-1.5-flash',
     models: ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']
   }
@@ -50,24 +50,29 @@ export async function queryAI(prompt: string, provider: ProviderType = 'groq', m
       });
 
       if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Google AI error: ${error}`);
+        const errorText = await response.text();
+        throw new Error(`Google AI error (${response.status}): ${errorText}`);
       }
 
       const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) {
+        throw new Error('No response generated from Google AI');
+      }
+      return text;
     } else {
       const modelName = model || config.defaultModel;
+      const headers: any = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.apiKey}`,
+      };
+      if (provider === 'openrouter') {
+        headers['HTTP-Referer'] = window.location.origin;
+        headers['X-Title'] = 'Aadrit Portfolio';
+      }
       const response = await fetch(config.baseUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${config.apiKey}`,
-          ...(provider === 'openrouter' && {
-            'HTTP-Referer': window.location.origin,
-            'X-Title': 'Aadrit Portfolio'
-          })
-        },
+        headers,
         body: JSON.stringify({
           model: modelName,
           messages: [
@@ -76,18 +81,22 @@ export async function queryAI(prompt: string, provider: ProviderType = 'groq', m
               content: prompt
             }
           ],
-          max_tokens: 1000,
+          max_tokens: 1500,
           temperature: 0.7
         })
       });
 
       if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`${config.name} error: ${error}`);
+        const errorText = await response.text();
+        throw new Error(`${config.name} error (${response.status}): ${errorText}`);
       }
 
       const data = await response.json();
-      return data.choices?.[0]?.message?.content || 'No response generated.';
+      const text = data.choices?.[0]?.message?.content;
+      if (!text) {
+        throw new Error(`No response generated from ${config.name}`);
+      }
+      return text;
     }
   } catch (error) {
     console.error('AI query error:', error);
