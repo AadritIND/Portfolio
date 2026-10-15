@@ -114,6 +114,26 @@ The portfolio fetches live data from GitHub's public API, ensuring:
 - Stars and stats reflect latest changes
 - Works without authentication
 
+## Work Catalog Auto-Sync
+
+The `/work` page is never hand-maintained. Two layers keep it truthful:
+
+1. **Runtime merge** (`src/lib/catalog.ts`) — every visit merges the curated
+   catalog with the live repo list from the GitHub API. New repositories appear
+   automatically and deleted ones disappear, with no rebuild or redeploy.
+   Curated copy (taglines, snippets, benchmarks, live URLs) is preserved by repo
+   name; brand-new repos get generated cards (category guessed from name/topics).
+2. **Build-time sync** (`scripts/sync-projects.mjs`) — runs on `prebuild` (local
+   and Vercel). It regenerates `src/data/projects.ts` from the live API, keeping
+   hand-edited entries and refreshing the committed baseline. If the API is
+   unreachable it exits cleanly and leaves the catalog untouched.
+
+Run it manually with:
+
+```bash
+npm run sync:repos
+```
+
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).

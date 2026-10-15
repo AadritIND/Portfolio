@@ -103,6 +103,22 @@ export default function CommandPalette() {
         run: () => scrollToId("log"),
       },
       {
+        id: "telemetry",
+        label: "DAILY COMMIT MATRIX",
+        hint: "#telemetry",
+        group: "NAVIGATE",
+        icon: <Layers className="w-4 h-4" />,
+        run: () => scrollToId("telemetry"),
+      },
+      {
+        id: "github-dev",
+        label: "GITHUB DEVELOPER PROGRAM",
+        hint: "#github-dev",
+        group: "NAVIGATE",
+        icon: <Github className="w-4 h-4" />,
+        run: () => scrollToId("github-dev"),
+      },
+      {
         id: "contact",
         label: "CONTACT TERMINAL",
         hint: "#contact",

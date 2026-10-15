@@ -7,6 +7,7 @@ import SkillMarquee from "../components/SkillMarquee";
 import About from "../components/About";
 import Timeline from "../components/Timeline";
 import GitHubStats from "../components/GitHubStats";
+import GitHubDeveloper from "../components/GitHubDeveloper";
 import Contact from "../components/Contact";
 
 const SESSION_KEY = "portfolio_loaded";
@@ -43,6 +44,7 @@ export default function HomePage() {
         <About />
         <Timeline />
         <GitHubStats />
+        <GitHubDeveloper />
         <Contact />
       </main>
     </div>

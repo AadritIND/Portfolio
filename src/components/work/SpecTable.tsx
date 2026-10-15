@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { ArrowUpRight, Star } from "lucide-react";
-import { PROJECTS } from "../../data/projects";
+import { useLiveProjects } from "../../lib/catalog";
 import {
   readRepoIndex,
   readTelemetryCache,
@@ -15,6 +15,8 @@ import {
  * live data show "—" instead of inventing numbers.
  */
 export default function SpecTable() {
+  // Live catalog so the parts list matches the real repository set.
+  const PROJECTS = useLiveProjects();
   const [index, setIndex] = useState<Map<string, RepoIndexEntry>>(() =>
     readRepoIndex(),
   );

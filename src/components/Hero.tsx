@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ScrambleText from "./ScrambleText";
 import Oscilloscope from "./Oscilloscope";
 import { IDENTITY } from "../data/types";
-import { PROJECTS } from "../data/projects";
+import { useLiveProjects } from "../lib/catalog";
 import {
   formatUptime,
   readTelemetryCache,
@@ -21,6 +21,7 @@ import {
  * rather than the whole sheet scaling and tilting.
  */
 export default function Hero({ onAbout }: { onAbout: () => void }) {
+  const PROJECTS = useLiveProjects();
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
 
@@ -216,7 +217,7 @@ export default function Hero({ onAbout }: { onAbout: () => void }) {
           </span>
           <div className="datum-rule min-w-6 flex-1 self-end" />
           <span className="hidden shrink-0 font-mono-code text-[9px] tracking-[0.2em] text-zinc-400 sm:inline">
-            06 SHEETS · REV 3.2.0
+            07 SHEETS · REV 3.2.0
           </span>
         </div>
       </div>

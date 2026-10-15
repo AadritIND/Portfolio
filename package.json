@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "sync:repos": "node scripts/sync-projects.mjs",
+    "prebuild": "node scripts/sync-projects.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },

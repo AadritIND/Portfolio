@@ -34,17 +34,19 @@ const NAV: NavItem[] = [
   { id: "works", index: "02", label: "WORKS", to: "/work" },
   { id: "about", index: "03", label: "ABOUT", to: "/", anchor: "about" },
   { id: "log", index: "04", label: "LOG", to: "/", anchor: "log" },
-  { id: "connect", index: "05", label: "CONNECT", to: "/", anchor: "contact" },
+  { id: "activity", index: "05", label: "COMMITS", to: "/", anchor: "telemetry" },
+  { id: "gh_dev", index: "06", label: "GH DEV", to: "/", anchor: "github-dev" },
+  { id: "connect", index: "07", label: "CONNECT", to: "/", anchor: "contact" },
 ];
 
 /**
- * Scroll-spy map: DOM section id → the nav tab it belongs to. The telemetry
- * sheet has no tab of its own, so it deliberately keeps LOG lit while you
- * scroll through it rather than lighting up the wrong tab.
+ * Scroll-spy map: DOM section id → the nav tab it belongs to.
  */
 const SPY: Array<{ nav: string; dom: string }> = [
   { nav: "about", dom: "about" },
   { nav: "log", dom: "log" },
+  { nav: "activity", dom: "telemetry" },
+  { nav: "gh_dev", dom: "github-dev" },
   { nav: "connect", dom: "contact" },
 ];
 

@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { CodeXml, ExternalLink, ArrowUpRight } from "lucide-react";
+import { CodeXml, ExternalLink, ArrowUpRight, Star, Clock } from "lucide-react";
 import type { Project } from "../../data/types";
 import { soundFX } from "../../lib/sound";
+import { readRepoIndex, relativeFrom } from "../../lib/telemetry";
 
 interface Props {
   project: Project;
@@ -10,8 +11,8 @@ interface Props {
 }
 
 /**
- * Project card — mouse-tracked 3D tilt, hover glow, status/benchmark chips
- * and INSPECT CODE / live / GitHub actions. 1:1 with the original layout.
+ * Project card — mouse-tracked 3D tilt, hover glow, status/benchmark chips,
+ * real-time repository telemetry sync (stars & last push), and INSPECT CODE / live / GitHub actions.
  */
 export default function ProjectCard({ project, onInspectCode }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -36,6 +37,11 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
     ry.set(0);
   };
 
+  const repoIndex = readRepoIndex();
+  const repoMeta = repoIndex.get(project.name.toLowerCase());
+  const liveStars = repoMeta?.stars ?? 0;
+  const livePushed = repoMeta?.pushedAt ?? null;
+
   return (
     <motion.div
       ref={ref}
@@ -45,7 +51,7 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22 }}
-      className="bg-[#14151C] border border-white/10 rounded-3xl flex flex-col justify-between hover:border-accent/60 transition-colors duration-300 group overflow-hidden relative shadow-xl min-h-[380px]"
+      className="bg-[#14151C] border border-white/10 rounded-3xl flex flex-col justify-between hover:border-accent/60 transition-colors duration-300 group overflow-hidden relative shadow-xl min-h-[400px]"
     >
       {/* Hover glow */}
       <div
@@ -60,43 +66,59 @@ export default function ProjectCard({ project, onInspectCode }: Props) {
         {/* Top row */}
         <div className="flex items-center justify-between px-7 pt-7 pb-0 gap-2">
           <div className="flex items-center gap-2">
-            {project.status && (
-              <span
-                className={`h-2.5 w-2.5 shrink-0 rounded-full ${
-                  project.status === "active" ? "bg-emerald-400" : "bg-blue-400"
-                } animate-pulse`}
-                title={
-                  project.status === "active"
-                    ? "Continuously updated"
-                    : "In development"
-                }
-              />
-            )}
+            <span
+              className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                project.status === "active" ? "bg-emerald-400" : "bg-blue-400"
+              } animate-pulse`}
+              title={
+                project.status === "active"
+                  ? "Continuously updated"
+                  : "In development"
+              }
+            />
             <span className="font-mono-code text-[11px] text-accent font-bold uppercase tracking-wider">
               {project.categoryLabel}
             </span>
           </div>
-          {project.benchmark ? (
-            <span className="font-mono-code text-[10px] px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-semibold whitespace-nowrap">
-              {project.benchmark}
-            </span>
-          ) : (
-            <span className="font-mono-code text-[11px] px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-zinc-400">
-              {project.language}
-            </span>
-          )}
+
+          <div className="flex items-center gap-1.5 font-mono-code text-[10px]">
+            {liveStars > 0 && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold">
+                <Star className="w-3 h-3 fill-amber-400" />
+                {liveStars}
+              </span>
+            )}
+            {project.benchmark ? (
+              <span className="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-semibold whitespace-nowrap">
+                {project.benchmark}
+              </span>
+            ) : (
+              <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-zinc-400">
+                {project.language}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Body */}
         <div className="flex flex-col px-7 py-5">
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-accent transition-colors duration-300 block"
-          >
-            {project.name}
-          </a>
+          <div className="flex items-center justify-between mb-2">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight group-hover:text-accent transition-colors duration-300 block"
+            >
+              {project.name}
+            </a>
+            {livePushed && (
+              <span className="text-[10px] font-mono-code text-zinc-500 flex items-center gap-1">
+                <Clock className="w-3 h-3 text-zinc-500" />
+                {relativeFrom(livePushed)}
+              </span>
+            )}
+          </div>
+
           <p className="font-mono-code text-xs text-zinc-400 leading-relaxed mb-4">
             {project.tagline}
           </p>

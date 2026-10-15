@@ -10,8 +10,8 @@ import {
   BrainCircuit,
   ArrowUpRight,
 } from "lucide-react";
-import { PROJECTS } from "../../data/projects";
 import { IDENTITY } from "../../data/types";
+import { useLiveProjects } from "../../lib/catalog";
 import { soundFX } from "../../lib/sound";
 import ProjectCard from "./ProjectCard";
 import type { Project } from "../../data/types";
@@ -32,6 +32,9 @@ const FILTERS = [
 export default function WorksGrid({ onInspectCode }: { onInspectCode: (p: Project) => void }) {
   const [filter, setFilter] = useState("ALL");
   const [query, setQuery] = useState("");
+  // Live catalog: curated entries merged with the real GitHub repo list, so
+  // new repos appear and deleted repos disappear without a rebuild.
+  const PROJECTS = useLiveProjects();
 
   const filtered = PROJECTS.filter((p) => {
     const matchesFilter = filter === "ALL" || p.category === filter;
