@@ -12,6 +12,9 @@ import {
   Bot,
   Coffee,
   Zap,
+  Shield,
+  Server,
+  GitBranch,
 } from "lucide-react";
 import { STACK, STACK_COLORS } from "../data/stack";
 import { IDENTITY } from "../data/types";
@@ -27,22 +30,22 @@ export default function About() {
   const passionCards = [
     {
       title: "TECHNICAL",
-      desc: "This is the thing which drives me. Digging deep down to see how things work and recreating them myself for my custom use is the best experience.",
+      desc: "I love tracing a problem from the shiny interface down to the moving parts underneath—then rebuilding the useful bits my own way.",
       icon: <Wrench className="w-5 h-5 text-accent" />,
     },
     {
       title: "CYBERSECURITY",
-      desc: "Ethical hacking enthusiast. Understanding how systems break is how you learn to build them properly — recon, web exploitation, and hardening.",
+      desc: "Ethical hacking keeps me curious: map the surface, find the weak spots, learn why they exist, then help make the system tougher.",
       icon: <Database className="w-5 h-5 text-accent" />,
     },
     {
       title: "AI & AUTOMATION",
-      desc: "My lifeline, the thing I depend on most. AI and automation are my fav part. Solving hard and complex problems together to deliver crazy outcomes.",
+      desc: "I use AI and automation to turn ambitious ideas into useful tools—and make repetitive tasks somebody else’s problem (usually a script).",
       icon: <BrainCircuit className="w-5 h-5 text-accent" />,
     },
     {
       title: "FRONTEND",
-      desc: "AHMMM, TBH this is a bottleneck, but dw will figure out something for this too.",
+      desc: "Still leveling up this skill tree. I’m learning to make interfaces feel as thoughtful and useful as the systems behind them.",
       icon: <LayoutDashboard className="w-5 h-5 text-accent" />,
     },
   ];
@@ -64,14 +67,32 @@ export default function About() {
       icon: <Coffee className="w-5 h-5 text-accent" />,
       label: "POWER SOURCE",
       title: "CAFFEINE",
-      desc: "OFC this is the thing keeping me pushing. Coffee & chai — the only two dependencies that never break.",
+      desc: "OFC this is the thing keeping me pushing. Coffee & Red Bull — the only two dependencies that never break.",
+    },
+    {
+      icon: <Shield className="w-5 h-5 text-accent" />,
+      label: "SECURITY LAB",
+      title: "KALI + BURP SUITE",
+      desc: "A safe sandbox for practicing recon and web security—break things here, learn how to make them harder to break out there.",
+    },
+    {
+      icon: <Server className="w-5 h-5 text-accent" />,
+      label: "SELF-HOSTED STACK",
+      title: "DOCKER + LINUX",
+      desc: "I like running and understanding the services behind my projects. If I can host it myself, I’ll probably give it a try.",
+    },
+    {
+      icon: <GitBranch className="w-5 h-5 text-accent" />,
+      label: "BUILD LOOP",
+      title: "GIT → VERCEL",
+      desc: "Build in small steps, keep the work versioned, ship it, then improve it with the real thing in front of me.",
     },
   ];
 
   return (
     <section
       id="about"
-      className="py-24 px-4 sm:px-8 bg-white border-t border-zinc-200 relative overflow-hidden"
+      className="about-tech py-24 px-4 sm:px-8 bg-white border-t border-zinc-200 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <SheetTag
@@ -86,7 +107,7 @@ export default function About() {
             <span className="font-tech text-[9px] uppercase tracking-[0.2em] text-accent mb-3 block">
               ABOUT // AADRIT
             </span>
-            <h2 className="font-display font-normal text-4xl sm:text-6xl text-[#0D0E12] tracking-[0.04em] leading-[1.1]">
+            <h2 className="font-display font-normal text-[clamp(1.6rem,7.5vw,3.75rem)] sm:text-6xl text-[#0D0E12] tracking-[0.04em] leading-[1.1]">
               WHO TF IS AADRIT?
             </h2>
           </div>
@@ -102,7 +123,7 @@ export default function About() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-2 bg-zinc-100 p-1.5 rounded-2xl w-max mb-10 border border-zinc-200/80 font-tech text-[9px]">
+        <div className="flex max-w-full items-center gap-1 overflow-x-auto bg-zinc-100 p-1.5 rounded-2xl w-max mb-10 border border-zinc-200/80 font-tech text-[9px]">
           {[
             { id: "intro", label: "01 // WHO I AM" },
             { id: "stack", label: "02 // TECH STACK" },
@@ -111,7 +132,7 @@ export default function About() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer ${
+              className={`shrink-0 px-3 sm:px-4 py-2.5 rounded-xl font-medium transition cursor-pointer ${
                 tab === t.id
                   ? "bg-white text-zinc-950 shadow-sm border border-black/5 font-semibold"
                   : "text-zinc-500 hover:text-zinc-900"
@@ -150,23 +171,24 @@ export default function About() {
                   </h3>
                   <div className="space-y-4 text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
                     <p>
-                      I&apos;m <strong className="text-white">Aadrit</strong> —
+                      I&apos;m <strong className="text-white">Aadrit</strong>—
                       a full-stack developer and cybersecurity enthusiast who
-                      wants to understand technology deeply, not just use it. I
-                      don&apos;t stop at the API; I take the stack apart to see
-                      what makes it tick.
+                      likes knowing what&apos;s happening under the hood. I
+                      don&apos;t just call an API and move on; I follow the
+                      wires, poke at the edge cases, and learn how the whole
+                      thing ticks.
                     </p>
                     <p>
-                      My work spans real-time collaboration tools, self-hosted
-                      infrastructure, AI-powered products, and security
-                      labs. I&apos;m obsessed with low-level understanding,
-                      ethical hacking, and making software that feels{" "}
-                      <em>alive</em>.
+                      I build real-time apps, self-hosted tools, and
+                      AI-powered projects, and spend plenty of time in security
+                      labs. If it can be built, automated, or safely taken
+                      apart, I&apos;m probably curious about it.
                     </p>
                     <p>
-                      When I&apos;m not shipping web apps, I&apos;m probing
-                      targets in a lab, training ML models on my own datasets,
-                      or automating away the boring parts of development.
+                      When I&apos;m not shipping something, I&apos;m testing
+                      ideas in a lab, training models on my own data, or
+                      teaching my computer to handle the boring stuff. Less
+                      busywork, more building.
                     </p>
                     <blockquote className="border-l-2 border-accent pl-4 italic text-zinc-400 mt-6 py-1">
                       &quot;At some point you touched a computer and the
@@ -269,7 +291,7 @@ export default function About() {
           {/* ============ SETUP ============ */}
           {tab === "setup" && (
             <div className="bg-[#0D0E12] text-white p-8 md:p-10 rounded-3xl border border-zinc-800 shadow-xl">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {setupCards.map((card, i) => (
                   <div key={i}>
                     <div className="flex items-center gap-2 mb-3">

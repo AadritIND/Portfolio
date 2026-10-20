@@ -32,7 +32,6 @@ interface NavItem {
 const NAV: NavItem[] = [
   { id: "base", index: "01", label: "BASE", to: "/" },
   { id: "works", index: "02", label: "WORKS", to: "/work" },
-  { id: "about", index: "03", label: "ABOUT", to: "/", anchor: "about" },
   { id: "log", index: "04", label: "LOG", to: "/", anchor: "log" },
   { id: "activity", index: "05", label: "COMMITS", to: "/", anchor: "telemetry" },
   { id: "gh_dev", index: "06", label: "GH DEV", to: "/", anchor: "github-dev" },
@@ -186,7 +185,7 @@ export default function MainframeBus({
     <header className="sticky top-0 z-40 w-full">
       {/* ── Fascia: brand · section tabs · readouts ─────────────────────── */}
       <div className="fascia border-b border-white/10">
-        <div className="mx-auto flex h-12 max-w-[1600px] items-center gap-2 px-3 sm:px-5">
+        <div className="mainframe-top mx-auto flex h-12 max-w-[1600px] items-center gap-2 px-3 sm:px-5">
           {/* Brand (home) / exit (work) */}
           {context === "work" ? (
             <button
@@ -230,7 +229,7 @@ export default function MainframeBus({
           <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
 
           {/* Section tabs */}
-          <nav className="flex min-w-0 flex-1 items-center overflow-x-auto">
+          <nav className="mainframe-nav flex min-w-0 flex-1 items-center overflow-x-auto">
             {NAV.map((item) => {
               const isActive = active === item.id;
               return (
@@ -242,7 +241,7 @@ export default function MainframeBus({
                   className="relative shrink-0 px-2.5 py-1.5 font-tech text-[9px] tracking-[0.12em] transition-colors sm:px-3 sm:text-[10px]"
                   style={{ color: isActive ? accentHex : "rgb(161 161 170)" }}
                 >
-                  <span className="mr-1.5 hidden font-mono-code text-[8px] opacity-50 md:inline">
+                  <span className="mr-1.5 hidden font-mono-code text-[8px] opacity-50 xl:inline">
                     {item.index}
                   </span>
                   {item.label}
@@ -260,7 +259,7 @@ export default function MainframeBus({
 
           {/* Readouts */}
           <div className="flex shrink-0 items-center gap-1.5">
-            <span className="hidden items-center gap-1.5 border border-white/10 bg-black/40 px-2 py-1 font-mono-code text-[10px] text-zinc-400 md:inline-flex">
+            <span className="hidden items-center gap-1.5 border border-white/10 bg-black/40 px-2 py-1 font-mono-code text-[10px] text-zinc-400 xl:inline-flex">
               <span
                 className="h-1.5 w-1.5 animate-pulse rounded-full"
                 style={{ backgroundColor: accentHex }}

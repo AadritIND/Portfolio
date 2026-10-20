@@ -3,8 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const GLYPHS = "!<>-_\\/[]{}=+*^?#@$%&01";
 
 /**
- * Text scramble — letters resolve from random glyphs on mount and re-run
- * on hover. Small decoder-ring effect for display headlines.
+ * Text scramble — letters resolve from random glyphs on mount.
  */
 export default function ScrambleText({
   text,
@@ -51,7 +50,7 @@ export default function ScrambleText({
   }, [run]);
 
   return (
-    <span className={className} onMouseEnter={run} aria-label={text}>
+    <span className={className} aria-label={text}>
       {display}
     </span>
   );

@@ -9,6 +9,7 @@ import Timeline from "../components/Timeline";
 import GitHubStats from "../components/GitHubStats";
 import GitHubDeveloper from "../components/GitHubDeveloper";
 import Contact from "../components/Contact";
+import PortraitReveal from "../components/PortraitReveal";
 
 const SESSION_KEY = "portfolio_loaded";
 
@@ -42,6 +43,7 @@ export default function HomePage() {
         />
         <SkillMarquee />
         <About />
+        <PortraitReveal />
         <Timeline />
         <GitHubStats />
         <GitHubDeveloper />

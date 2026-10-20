@@ -79,7 +79,7 @@ export default function Contact() {
             </p>
 
             {/* Direct inbox */}
-            <div className="inline-flex items-center gap-3 p-2 pr-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition group mb-8">
+            <div className="inline-flex max-w-full flex-wrap items-center gap-3 p-2 pr-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition group mb-8">
               <div className="p-3 rounded-xl bg-accent text-white">
                 <Mail className="w-5 h-5" />
               </div>
@@ -87,7 +87,7 @@ export default function Contact() {
                 <span className="font-tech text-[9px] tracking-wider text-zinc-400">
                   DIRECT INBOX
                 </span>
-                <span className="font-mono-code text-xs sm:text-sm font-semibold text-white">
+                <span className="break-all font-mono-code text-xs sm:text-sm font-semibold text-white">
                   {IDENTITY.email}
                 </span>
               </div>

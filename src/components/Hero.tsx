@@ -96,7 +96,7 @@ export default function Hero({ onAbout }: { onAbout: () => void }) {
               </span>
             </div>
 
-            <h1 className="font-hero text-[2.55rem] leading-[0.98] tracking-[0.01em] text-[#0D0E12] sm:text-[3.5rem] lg:text-[4.3rem] xl:text-[4.9rem]">
+            <h1 className="font-hero text-[clamp(1.7rem,8.5vw,3.5rem)] leading-[0.98] tracking-[0.01em] text-[#0D0E12] sm:text-[3.5rem] lg:text-[4.3rem] xl:text-[4.9rem]">
               I BUILD THE
               <br />
               THING, THEN
